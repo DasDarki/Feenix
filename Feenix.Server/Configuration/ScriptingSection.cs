@@ -13,12 +13,12 @@ internal class ScriptingSection
     [TomlPrecedingComment("Whether unsigned, unregistered - so called anonymous - scripts are allowed to trespass the server.")]
     internal bool AllowAnonymousScripts { get; set; } = false;
 
-    [TomlPrecedingComment("The url to the script registry against which the scripts are being checked.")]
-    internal string ScriptRegistry { get; set; } = "";
+    [TomlPrecedingComment("A list of urls which script registries the server should check against against.")]
+    internal List<string> ScriptRegistries { get; set; } = new();
     
     [TomlPrecedingComment("A list containing event names which are not allowed to be used by scripts.")]
-    internal string[] EventBlacklist { get; set; } = Array.Empty<string>();
+    internal List<string> EventBlacklist { get; set; } = new();
     
     [TomlPrecedingComment("A list containing event names which only are allowed to be used by scripts. If not empty, only events in this list are allowed.")]
-    internal string[] EventWhitelist { get; set; } = Array.Empty<string>();
+    internal List<string> EventWhitelist { get; set; } = new();
 }
