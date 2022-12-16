@@ -85,7 +85,7 @@ public static class Signer
         using var md5 = MD5.Create();
         var hashBuilder = new StringBuilder();
         
-        foreach (var file in Directory.GetFiles(dir, "*.lua", SearchOption.AllDirectories))
+        foreach (var file in Directory.GetFiles(dir, "*.js", SearchOption.AllDirectories))
         {
             using var stream = File.OpenRead(file);
             var hash = md5.ComputeHash(stream);
