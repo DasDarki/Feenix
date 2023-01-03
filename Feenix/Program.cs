@@ -1,17 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Feenix;
-using Feenix.Common.Protocol.Client;
-using Neptunium;
+using Feenix.Common.Protocol;
+using HeavyNetwork;
 
-Network.ConnectAsync<Client>("127.0.0.1", 25319, "", client =>
+FeenixProtocol.Initialize();
+
+var client = new Client(new HeavyClientOptions
 {
-    client.SendPacket(new PingPacket
-    {
-        Message = "Hallo Welt!"
-    });
-}).GetAwaiter().GetResult();
+    Host = "127.0.0.1",
+    Port = 57732
+});
 
+client.ConnectAsync().GetAwaiter().GetResult();
 
 while (true)
 {

@@ -1,11 +1,11 @@
 ﻿using Feenix.Common.Protocol.Client;
 using Feenix.Common.Protocol.Server;
-using Neptunium.Protocol;
+using HeavyNetwork.Protocol;
 
 namespace Feenix.Common.Protocol;
 
 /// <summary>
-/// Registers all the packets for the protocol in the neptunium packet registry.
+/// Registers all the packets for the protocol in the packet registry.
 /// </summary>
 public static class FeenixProtocol
 {

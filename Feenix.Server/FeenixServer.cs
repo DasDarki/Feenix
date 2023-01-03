@@ -1,62 +1,39 @@
-﻿using Feenix.Common;
-using Feenix.Common.Protocol.Client;
-using Feenix.Common.Protocol.Server;
-using Feenix.Server.Configuration;
-using Neptunium;
-using Neptunium.Server;
+﻿using Feenix.Server.Configuration;
+using HeavyNetwork;
 
 namespace Feenix.Server;
 
 /// <summary>
 /// The main component for the Feenix server. From here the networking is being managed.
 /// </summary>
-internal class FeenixServer
+internal class FeenixServer : HeavyServer<FeenixClient>
 {
     /// <summary>
-    /// The singleton instance of the running Feenix server.
+    /// The singleton running instance of this <see cref="FeenixServer"/> for internal usage.
     /// </summary>
-    internal static FeenixServer Instance { get; set; } = null!;
+    internal static FeenixServer Instance { get; } = new();
     
-    private readonly IServer<FeenixClient>? _server;
-
-    internal FeenixServer()
+    /// <summary>
+    /// Creates a new feenix server.
+    /// </summary>
+    private FeenixServer(IServiceProvider? serviceProvider = null) 
+        : base(BuildOptions(), serviceProvider)
     {
-        _server = Network.CreateAsync<FeenixClient>(
-            Config.Current.General.IsLocal,
-            Config.Current.General.Port,
-            string.IsNullOrEmpty(Config.Current.General.Password) ? null : Config.Current.General.Password
-        ).GetAwaiter().GetResult();
-        
-        PacketHandler.Scan(this);
     }
 
     /// <summary>
-    /// Starts the server.
+    /// Creates the <see cref="HeavyServerOptions"/> for this server.
     /// </summary>
-    internal void Start()
+    private static HeavyServerOptions BuildOptions()
     {
-        if (_server == null)
-        {
-            Logger.Fatal("Failed to initialize server.");
-            return;
-        }
-        
-        Logger.Info("Starting Feenix server...");
-        _server.StartAsync().GetAwaiter().GetResult();
-        
-        Logger.Info("Feenix server started.");
-    }
+        var config = Config.Current;
 
-    [PacketHandler(typeof(PingPacket))]
-    internal void OnPingPacket(FeenixClient client, PingPacket packet)
-    {
-        var reverse = packet.Message.Reverse().ToArray();
-        
-        Console.WriteLine("Received ping packet from {0} with message: {1}", client, packet.Message);
-        
-        client.SendPacket(new PongPacket
+        var options = new HeavyServerOptions
         {
-            Message = new string(reverse)
-        });
+            Host = config.General.IsLocal ? "127.0.0.1" : "0.0.0.0",
+            Port = config.General.Port
+        };
+
+        return options;
     }
 }

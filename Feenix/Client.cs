@@ -1,19 +1,28 @@
-﻿using Feenix.Common.Protocol.Server;
-using Neptunium;
-using Neptunium.Client;
+﻿using Feenix.Common.Protocol.Client;
+using Feenix.Common.Protocol.Server;
+using HeavyNetwork;
 
 namespace Feenix;
 
-internal class Client : BaseClient
+internal class Client : HeavyClient
 {
-    internal Client()
+    public Client(HeavyClientOptions options, IServiceProvider? serviceProvider = null) : base(options, serviceProvider)
     {
-        PacketHandler.Scan(this);
+    }
+
+    protected override void OnConnected()
+    {
+        base.OnConnected();
+        
+        SendPacket(new PingPacket
+        {
+            Message = "Hallo Welt!"
+        });
     }
 
     [PacketHandler(typeof(PongPacket))]
     internal void OnPongPacket(PongPacket packet)
     {
-        Console.WriteLine(packet.Message);
+        Console.WriteLine(packet.Reversed);
     }
 }
