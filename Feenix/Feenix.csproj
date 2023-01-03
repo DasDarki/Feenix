@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Feenix.Common\Feenix.Common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Neptunium" Version="1.0.0" />
+    </ItemGroup>
+
 </Project>

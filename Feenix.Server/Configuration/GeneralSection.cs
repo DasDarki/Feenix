@@ -15,4 +15,7 @@ internal class GeneralSection
     
     [TomlPrecedingComment("The port of the application.")]
     internal int Port { get; set; } = 57732;
+    
+    [TomlPrecedingComment("The password for the server (if you want to make a private server; leave empty to disable password protection).")]
+    internal string Password { get; set; } = "";
 }
