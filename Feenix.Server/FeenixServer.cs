@@ -1,12 +1,12 @@
 ﻿using Feenix.Server.Configuration;
-using HeavyNetwork;
+using LiteNetwork.Server;
 
 namespace Feenix.Server;
 
 /// <summary>
 /// The main component for the Feenix server. From here the networking is being managed.
 /// </summary>
-internal class FeenixServer : HeavyServer<FeenixClient>
+internal class FeenixServer : LiteServer<FeenixClient>
 {
     /// <summary>
     /// The singleton running instance of this <see cref="FeenixServer"/> for internal usage.
@@ -16,19 +16,19 @@ internal class FeenixServer : HeavyServer<FeenixClient>
     /// <summary>
     /// Creates a new feenix server.
     /// </summary>
-    private FeenixServer(IServiceProvider? serviceProvider = null) 
-        : base(BuildOptions(), serviceProvider)
+    private FeenixServer() 
+        : base(BuildOptions())
     {
     }
 
     /// <summary>
-    /// Creates the <see cref="HeavyServerOptions"/> for this server.
+    /// Creates the <see cref="LiteServerOptions"/> for this server.
     /// </summary>
-    private static HeavyServerOptions BuildOptions()
+    private static LiteServerOptions BuildOptions()
     {
         var config = Config.Current;
 
-        var options = new HeavyServerOptions
+        var options = new LiteServerOptions
         {
             Host = config.General.IsLocal ? "127.0.0.1" : "0.0.0.0",
             Port = config.General.Port

@@ -20,6 +20,11 @@ public static class Logger
     {
         PrintFormatted(ConsoleColor.Blue, "INFO", message, args);
     }
+    
+    public static void Verbose(string message, params object[] args)
+    {
+        PrintFormatted(ConsoleColor.DarkGray, "VERBOSE", message, args);
+    }
 
     public static void Success(string message, params object[] args)
     {

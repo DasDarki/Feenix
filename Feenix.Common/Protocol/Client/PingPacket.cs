@@ -1,17 +1,22 @@
-using HeavyNetwork.Protocol;
+using Feenix.Common.Protocol.Api;
 
 namespace Feenix.Common.Protocol.Client;
 
 public class PingPacket : Packet
 {
-    public string Message { get; set; }
+    public string Message { get; private set; }
 
-    public override void Write(PacketWriter writer)
+    public PingPacket(string message)
+    {
+        Message = message;
+    }
+
+    protected override void Write(PacketWriter writer)
     {
         writer.WriteString(Message);
     }
 
-    public override void Read(PacketReader reader)
+    protected override void Read(PacketReader reader)
     {
         Message = reader.ReadString();
     }

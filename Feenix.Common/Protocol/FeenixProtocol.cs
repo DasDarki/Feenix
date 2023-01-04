@@ -1,6 +1,6 @@
-﻿using Feenix.Common.Protocol.Client;
+﻿using Feenix.Common.Protocol.Api;
+using Feenix.Common.Protocol.Client;
 using Feenix.Common.Protocol.Server;
-using HeavyNetwork.Protocol;
 
 namespace Feenix.Common.Protocol;
 

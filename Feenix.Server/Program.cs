@@ -10,7 +10,7 @@ Config.Load();
 Logger.Info("Initializing server...");
 FeenixProtocol.Initialize();
 
-FeenixServer.Instance.StartAsync().GetAwaiter().GetResult();
+await FeenixServer.Instance.StartAsync();
 
 Logger.Info("Server started. Feenix is now up and running.");
 
@@ -24,6 +24,5 @@ while (true)
     }
 }
 
-// TODO add stop code here
-FeenixServer.Instance.StopAsync().GetAwaiter().GetResult();
+await FeenixServer.Instance.StopAsync();
 Logger.Info("Server stopped.");

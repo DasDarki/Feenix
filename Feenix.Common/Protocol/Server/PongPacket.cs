@@ -1,17 +1,22 @@
-using HeavyNetwork.Protocol;
+using Feenix.Common.Protocol.Api;
 
 namespace Feenix.Common.Protocol.Server;
 
 public class PongPacket : Packet
 {
-    public string Reversed { get; set; }
+    public string Reversed { get; private set; }
+
+    public PongPacket(string reversed)
+    {
+        Reversed = reversed;
+    }
     
-    public override void Write(PacketWriter writer)
+    protected override void Write(PacketWriter writer)
     {
         writer.WriteString(Reversed);
     }
 
-    public override void Read(PacketReader reader)
+    protected override void Read(PacketReader reader)
     {
         Reversed = reader.ReadString();
     }

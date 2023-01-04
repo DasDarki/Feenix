@@ -2,17 +2,18 @@
 
 using Feenix;
 using Feenix.Common.Protocol;
-using HeavyNetwork;
+using Feenix.Common.Protocol.Client;
 
 FeenixProtocol.Initialize();
 
-var client = new Client(new HeavyClientOptions
-{
-    Host = "127.0.0.1",
-    Port = 57732
-});
+var client = new FeenixClient("127.0.0.1", 57732);
 
-client.ConnectAsync().GetAwaiter().GetResult();
+client.Connected += (sender, eventArgs) =>
+{
+    client.SendPacket(new PingPacket("Hello World!"));
+};
+
+await client.ConnectAsync();
 
 while (true)
 {

@@ -39,6 +39,8 @@ internal class Config
     internal static void Load()
     {
         var configPath = Path.Combine(Environment.CurrentDirectory, "config.toml");
+        Logger.Verbose("Configuration path set to {}", configPath);
+        
         if (!File.Exists(configPath))
         {
             Logger.Warning("Config file not found. Creating default config. Please edit the config file and restart the server.");
